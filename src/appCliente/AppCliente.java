@@ -1,14 +1,14 @@
 package appCliente;
 
-import sistema.SEM;
+import sistema.SistemaCentral;
 
 public class AppCliente {
 	private String patente;
 	private String nroCelular;
 	private ModoDeApp modo;
-	private SEM sistema;
+	private SistemaCentral sistema;
 	
-	public AppCliente(String patente, String nro, SEM sistema) {
+	public AppCliente(String patente, String nro, SistemaCentral sistema) {
 		this.patente = patente;
 		this.nroCelular = nro;
 		this.sistema = sistema;

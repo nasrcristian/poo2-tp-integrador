@@ -1,6 +1,6 @@
 package sistema;
 
-public class SEM {
+public class SistemaCentral {
 
 	public void iniciarEstacionamientoPara(String patente, String nroCelular) {
 		// TODO Auto-generated method stub
