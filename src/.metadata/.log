@@ -1,0 +1,26 @@
+!SESSION 2024-05-31 18:47:27.514 -----------------------------------------------
+eclipse.buildId=4.31.0.20240307-1200
+java.version=22
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data /mnt/workspace/the wizard/Programacion/unqui.poo2.nasr/poo2.integrador/src
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-31 18:47:29.191
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-31 18:47:30.009
+!MESSAGE Logback config file: /mnt/workspace/the wizard/Programacion/unqui.poo2.nasr/poo2.integrador/src/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.6.0.20240217-1525.xml
+!SESSION 2024-05-31 18:47:48.604 -----------------------------------------------
+eclipse.buildId=4.31.0.20240307-1200
+java.version=22
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data /mnt/workspace/the wizard/Programacion/unqui.poo2.nasr/poo2.integrador/src
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-31 18:47:50.095
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-31 18:47:51.081
+!MESSAGE Logback config file: /mnt/workspace/the wizard/Programacion/unqui.poo2.nasr/poo2.integrador/src/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.6.0.20240217-1525.xml
