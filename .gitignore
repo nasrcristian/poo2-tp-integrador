@@ -2,3 +2,5 @@
 /.idea/
 *.iml
 *.xml
+.classpath
+.metadata
