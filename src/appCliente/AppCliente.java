@@ -1,17 +1,23 @@
 package appCliente;
 
+import appCliente.asistencia.AsistenciaActivada;
+import appCliente.asistencia.AsistenciaAlUsuario;
+import appCliente.asistencia.AsistenciaDesactivada;
+import appCliente.modo.ModoAutomatico;
+import appCliente.modo.ModoDeApp;
+import appCliente.modo.ModoManual;
 import sistema.SistemaCentral;
 
 public class AppCliente implements MovementSensor{
 	private String patente;
-	private String nroCelular;
+	private int nroCelular;
 	private ModoDeApp modo;
 	private SistemaCentral sistema;
 	private Notificador notificador;
 	private AsistenciaAlUsuario asistencia;
 	
 	
-	public AppCliente(String patente, String nro, SistemaCentral sistema, Notificador notificador) {
+	public AppCliente(String patente, int nro, SistemaCentral sistema, Notificador notificador) {
 		this.patente = patente;
 		this.nroCelular = nro;
 		this.sistema = sistema;
@@ -79,11 +85,11 @@ public class AppCliente implements MovementSensor{
 	
 	// Manejo de la app con el sistema principal
 	public void iniciarEstacionamiento() {
-		this.sistema.iniciarEstacionamientoPara(this.patente, this.nroCelular);
+		this.sistema.iniciarEstacionamientoPara(this);
 	}
 	
 	public void finalizarEstacionamiento() {
-		this.sistema.finalizarEstacionamientoDe(this.nroCelular);
+		this.sistema.finalizarEstacionamientoPara(this);
 	}
 	
 	public float consultaSaldo() {

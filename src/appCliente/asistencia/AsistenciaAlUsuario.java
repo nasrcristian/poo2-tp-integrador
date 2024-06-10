@@ -1,6 +1,8 @@
-package appCliente;
+package appCliente.asistencia;
 
-interface AsistenciaAlUsuario {
+import appCliente.AppCliente;
+
+public interface AsistenciaAlUsuario {
 	public void manejarCambioAPiePara(AppCliente app);
 	public void manejarCambioAVehiculoPara(AppCliente app);
 }

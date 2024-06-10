@@ -1,4 +1,6 @@
-package appCliente;
+package appCliente.modo;
+
+import appCliente.AppCliente;
 
 public class ModoAutomatico extends ModoDeApp{
 

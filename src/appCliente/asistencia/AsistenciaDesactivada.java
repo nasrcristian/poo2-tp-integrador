@@ -1,4 +1,6 @@
-package appCliente;
+package appCliente.asistencia;
+
+import appCliente.AppCliente;
 
 public class AsistenciaDesactivada implements AsistenciaAlUsuario{
 

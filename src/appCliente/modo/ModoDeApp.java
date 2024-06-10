@@ -1,13 +1,15 @@
-package appCliente;
+package appCliente.modo;
+
+import appCliente.AppCliente;
 
 public abstract class ModoDeApp {
 
-	protected final void asistenciaInicioEstacionamientoPara(AppCliente app) {
+	public final void asistenciaInicioEstacionamientoPara(AppCliente app) {
 		this.alertarUsuario(app, this.mensajeIniciarEstacionamiento());
 		this.manejarIniciarEstacionamiento(app);
 	}
 	
-	protected final void asistenciaFinDeEstacionamientoPara(AppCliente app) {
+	public final void asistenciaFinDeEstacionamientoPara(AppCliente app) {
 		this.alertarUsuario(app, this.mensajeFinalizarEstacionamiento());
 		this.manejarFinalizarEstacionamiento(app);
 	}
