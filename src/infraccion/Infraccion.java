@@ -2,8 +2,7 @@ package infraccion;
 
 
 import inspector.Inspector;
-import zona.Zona;
-
+import zona.ZonaDeEstacionamiento;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,10 +10,10 @@ public class Infraccion {
     private String patente;
     private LocalDate fecha;
     private LocalTime hora;
-    private Zona zona;
+    private ZonaDeEstacionamiento zona;
     private Inspector inspector;
 
-    public Infraccion(String patente, LocalDate fecha, LocalTime hora, Zona zona, Inspector inspector){
+    public Infraccion(String patente, LocalDate fecha, LocalTime hora, ZonaDeEstacionamiento zona, Inspector inspector){
         this.patente = patente;
         this.fecha = fecha;
         this.hora = hora;
@@ -34,7 +33,7 @@ public class Infraccion {
         return this.hora;
     }
 
-    public Zona getZona(){
+    public ZonaDeEstacionamiento getZona(){
         return this.zona;
     }
 

@@ -11,16 +11,16 @@ import inspector.Inspector;
 
 public class GestorInfracciones {
     private List<Infraccion> infracciones;
-    private GestorEstacionamiento sistema;
+    private SistemaCentral sistema;
 
-    public GestorInfracciones(GestorEstacionamiento sistema){
+    public GestorInfracciones(SistemaCentral sistema){
         infracciones = new ArrayList<Infraccion>();
         this.sistema = sistema;
     }
 
-    //consulta al gestor de estacionamientos si tiene guardado algun estacionamiento con esa patente y en el horario que se consulta
-    public boolean tieneEstacionamientoVigente(String patente, LocalDateTime horaConsulta){
-        return this.sistema.tieneEstacionamientoVigente(patente, horaConsulta);
+    //consulta al gestor de estacionamientos si tiene guardado algun estacionamiento con esa patente y en el horario que se consulta 
+    public boolean tieneEstacionamientoVigente(String patente){
+        return this.sistema.tieneEstacionamientoVigente(patente);
     }
 
     //consulta en la lista de infracciones si hay alguna infraccion con la patente ingresada
