@@ -6,9 +6,9 @@ public class Cuenta {
 	private float saldo;
 	private String patente;
 	
-	public Cuenta(int unNumero, float unSaldo, String unaPatente) {
+	public Cuenta(int unNumero, String unaPatente) {
 		this.nroCelular = unNumero;
-		this.saldo = unSaldo;
+		this.saldo = 0;
 		this.patente = unaPatente;
 	}
 	
@@ -22,5 +22,9 @@ public class Cuenta {
 
 	public String getPatente() {
 		return this.patente;
+	}
+
+	public void cargarCredito(Float monto) {
+		this.saldo += monto;
 	}
 }

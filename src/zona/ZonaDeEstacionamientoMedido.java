@@ -6,11 +6,11 @@ import puntoVenta.PuntoVenta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZonaDeEstacionamientoPuntual implements ZonaDeEstacionamiento {
+public class ZonaDeEstacionamientoMedido implements ZonaDeEstacionamiento {
     private Inspector inspector;
     private List<PuntoVenta> puntoVentas;
 
-    public ZonaDeEstacionamientoPuntual(Inspector inspector){
+    public ZonaDeEstacionamientoMedido(Inspector inspector){
         this.puntoVentas = new ArrayList<PuntoVenta>();
         this.inspector = inspector;
         this.inspector.asignarZonaDeEstacionamiento(this);

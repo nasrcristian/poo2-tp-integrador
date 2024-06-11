@@ -3,7 +3,7 @@ package inspector;
 import sistema.SistemaCentral;
 import zona.SinZonaDeEstacionamiento;
 import zona.ZonaDeEstacionamiento;
-import java.time.LocalDateTime;
+
 
 public class Inspector {
     private SistemaCentral sistema;

@@ -18,10 +18,6 @@ public class GestorInfracciones {
         this.sistema = sistema;
     }
 
-    //consulta al gestor de estacionamientos si tiene guardado algun estacionamiento con esa patente y en el horario que se consulta 
-    public boolean tieneEstacionamientoVigente(String patente){
-        return this.sistema.tieneEstacionamientoVigente(patente);
-    }
 
     //consulta en la lista de infracciones si hay alguna infraccion con la patente ingresada
     public boolean tieneInfraccion(String patente){

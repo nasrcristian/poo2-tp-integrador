@@ -1,4 +1,4 @@
-package sistema;
+package sistema.estacionamiento;
 
 import java.time.LocalTime;
 
@@ -29,8 +29,8 @@ public abstract class Estacionamiento {
 		return this.horaFin;
 	}
 	
-	public boolean estaVigente() {
-		LocalTime horaActual = LocalTime.now()
-		return this.getHoraFin().isAfter(horaActual);
+	public boolean estaVigente(LocalTime horarioApertura, LocalTime horarioCierre) {
+		LocalTime horaActual = LocalTime.now();
+		return this.horaInicio.isAfter(horarioApertura) && this.horaFin.isBefore(horarioCierre) && this.horaFin.isAfter(horaActual)  ;
 	}
 }
