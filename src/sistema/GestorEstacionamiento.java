@@ -7,12 +7,12 @@ import java.util.Optional;
 public class GestorEstacionamiento {
     float costoPorHora;
     LocalTime horarioInicio;
-    LocalTime hoarioFin;
+    LocalTime horarioFin;
     List<Estacionamiento> estacionamientosActuales;
     
 	public boolean estaVigente(String patente) {
 		Optional<Estacionamiento> estacionamientoBuscado = this.estacionamientosActuales.stream().filter(e -> e.getPatente() == patente).findFirst();
-		return estacionamientoBuscado.isPresent() ? estacionamientoBuscado.get().estaVigente() : false;
+		return estacionamientoBuscado.map(Estacionamiento::estaVigente).orElse(false);
 	}
     
     
