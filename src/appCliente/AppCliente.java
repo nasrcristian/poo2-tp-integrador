@@ -26,6 +26,9 @@ public class AppCliente implements MovementSensor{
 		this.notificador = notificador; // Es un objeto externo que se encargaría de manejar las notificaciones que reciba la app.
 	}
 	
+	public int getNumero() {
+		return this.nroCelular;
+	}
 	
 	// Modo de la aplicacion
 	private void setModo(ModoDeApp m) {
@@ -96,7 +99,9 @@ public class AppCliente implements MovementSensor{
 		return this.sistema.consultarSaldoDe(this.nroCelular);
 	}
 	
-
+	public void crearCuenta() {
+		this.sistema.crearCuenta(this.nroCelular, this.patente);
+	}
 
 	public void notificar(String mensaje) {
 		this.notificador.manejarNotificacion(mensaje);;

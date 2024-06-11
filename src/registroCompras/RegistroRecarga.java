@@ -7,16 +7,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class RegistroRecarga extends RegistroCompra {
-    private AppCliente celular;
+    private int celular;
     private Float monto;
 
-    public RegistroRecarga(Integer numeroControl, PuntoVenta puntoVenta, LocalDate fecha, LocalTime hora, AppCliente celular, Float monto) {
+    public RegistroRecarga(Integer numeroControl, PuntoVenta puntoVenta, LocalDate fecha, LocalTime hora, int numeroDeCelular, Float monto) {
         super(numeroControl, puntoVenta, fecha, hora);
-        this.celular = celular;
+        this.celular = numeroDeCelular;
         this.monto = monto;
     }
 
-    public AppCliente getCelular() {
+    public int getCelular() {
         return celular;
     }
 
