@@ -45,10 +45,6 @@ public class AppCliente implements MovementSensor{
 		this.estado = estado;
 	}
 
-	public boolean haySaldoSuficiente(){
-		return this.sistema.haySaldoSuficiente(this);
-	}
-
 	public void iniciarEstacionamiento() {
 		this.estado.iniciarEstacionamiento(this);
 	}

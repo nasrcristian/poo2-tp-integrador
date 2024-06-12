@@ -7,7 +7,7 @@ public class ConEstacionamiento extends EstadoApp {
     }
 
     @Override
-    protected void iniciarEstacionamiento(AppCliente appCliente, String patente) {
+    protected void iniciarEstacionamiento(AppCliente appCliente) {
         // no hace nada porque ya tiene un estacionamiento vigente
     }
 

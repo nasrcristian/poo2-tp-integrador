@@ -83,12 +83,6 @@ public class SistemaCentral implements ISistemaObservable {
 	public boolean tieneEstacionamientoVigente(String patente) {
 		return this.estacionamientos.estaVigente(patente);
 	}
-
-	public boolean haySaldoSuficiente(AppCliente appCliente){
-		float saldoCliente = consultarSaldoDe(appCliente.getNumero());
-		return this.estacionamientos.haySaldoSuficiente(saldoCliente);
-	}
-	
 	
 	public void iniciarEstacionamientoSiPuedePara(int numeroDeTelefono) {
 		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroDeTelefono);
