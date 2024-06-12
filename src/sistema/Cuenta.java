@@ -1,27 +1,29 @@
 package sistema;
 
+import appCliente.AppCliente;
+
 public class Cuenta {
-
-	private int nroCelular;
 	private float saldo;
-	private String patente;
+	private AppCliente app;
 	
-	public Cuenta(int unNumero, String unaPatente) {
-		this.nroCelular = unNumero;
+	public Cuenta(AppCliente app) {
 		this.saldo = 0;
-		this.patente = unaPatente;
+		this.app = app;
 	}
-	
 	public int getNroCelular() {
-		return this.nroCelular;
+		return this.app.getNumero();
 	}
 
+	public AppCliente getApp() {
+		return this.app;
+	}
+	
 	public float getSaldo() {
 		return this.saldo;
 	}
 
 	public String getPatente() {
-		return this.patente;
+		return this.app.getPatente();
 	}
 
 	public void cargarCredito(float monto) {

@@ -10,7 +10,6 @@ import appCliente.AppCliente;
 import java.util.ArrayList;
 
 import inspector.Inspector;
-import registroCompras.RegistroCompra;
 import registroCompras.RegistroCompraPuntual;
 import registroCompras.RegistroRecarga;
 import sistema.entidadObservadora.IEntidad;
@@ -39,20 +38,14 @@ public class SistemaCentral implements ISistemaObservable {
 	}
 
 	//mensajes cuenta
-	public void crearCuenta(int nroCelular, String patente) {
-		this.cuentas.crearCuenta(nroCelular, patente);
+	public void crearCuenta(AppCliente app) {
+		this.cuentas.crearCuenta(app);
 	}
 	
 	public float consultarSaldoDe(int nroCelular) {
 		return this.cuentas.getSaldo(nroCelular);
 	}
 	
-	/*  Comentado por ahora, en caso de que no sea necesario vuela...
-	//NOTE: metodo necesario? en publico?
-	public void registrarCompra(RegistroCompra registroDeCompra) {
-		this.registros.agregarRegistro(registroDeCompra);
-	}
-	*/
 	//metodos infraccion
 	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga){
 		try {
@@ -96,40 +89,45 @@ public class SistemaCentral implements ISistemaObservable {
 		return this.estacionamientos.haySaldoSuficiente(saldoCliente);
 	}
 	
-	/*
-	public void iniciarEstacionamientoPara(AppCliente appCliente) {
-		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(appCliente.getNumero());
+	
+	public void iniciarEstacionamientoSiPuedePara(int numeroDeTelefono) {
+		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroDeTelefono);
 		if (cuentaBuscada.isPresent()) {
-			this.estacionamientos.iniciarEstacionamientoPara(cuentaBuscada.get());
-		} else {
-			// TODO Decidir como manejar el caso de que no haya cuenta...
+			Cuenta cuenta = cuentaBuscada.get();
+			iniciarEstacionamientoPara(cuenta);
 		}
-		
 	}
-	*/
 
-	/*
-	public void iniciarEstacionamientoPara(String patente) {
-		// TODO Auto-generated method stub
-		this.estacionamientos.iniciarEstacionamiento(patente, this);
-
+	private void iniciarEstacionamientoPara(Cuenta cuenta) {
+		AppCliente app = cuenta.getApp();
+		try {
+			EstacionamientoPorApp ticketDeEstacionamiento = this.estacionamientos.iniciarEstacionamientoPara(cuenta);
+			this.notificarInicioDeEstacionamientoDe(ticketDeEstacionamiento);
+			app.notificar("Se ha iniciado correctamente un estacionamiento a las " + ticketDeEstacionamiento.getHoraInicio() + ". El horario máximo de finalización del mismo es a las " + ticketDeEstacionamiento.getHoraFin() + ".");
+		} catch (Exception e) {
+			app.notificar(e.getMessage());
+		}
 	}
-	*/
 
-	public void finalizarEstacionamientoPara(int numeroCelular){
+
+	public void finalizarEstacionamientoSiPuedePara(int numeroCelular){
 		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroCelular);
 		if (cuentaBuscada.isPresent()) {
 			Cuenta cuenta = cuentaBuscada.get();
-			AppCliente app = cuenta.getApp();
-			try {
-				EstacionamientoPorApp ticketDeEstacionamiento = this.estacionamientos.finalizarEstacionamientoPara(cuenta.getPatente());
-				this.cuentas.descontarCredito(numeroCelular, ticketDeEstacionamiento.getCostoTotal());
-				this.notificarFinDeEstacionamientoDe(ticketDeEstacionamiento);
-				app.notificar("El estacionamiento comenzado a las " + ticketDeEstacionamiento.getHoraInicio() + ", finalizó correctamente a las " + ticketDeEstacionamiento.getHoraFin() + ". Su duración total fue de " + ticketDeEstacionamiento.getDuracion() + "y tuvo un costo total de: " + ticketDeEstacionamiento.getCostoTotal() + " pesos.");
-			} catch (Exception e){
-				app.notificar(e.getMessage());
-			}
-		}		// this.estacionamientos.finalizarEstacionamiento(patente, this); //TODO pasar appCliente o patente para poder sacar los datos de la aplicacion
+			finalizarEstacionamientoPara(cuenta);
+		}
+	}
+
+	private void finalizarEstacionamientoPara(Cuenta cuenta) {
+		AppCliente app = cuenta.getApp();
+		try {
+			EstacionamientoPorApp ticketDeEstacionamiento = this.estacionamientos.finalizarEstacionamientoPara(cuenta.getPatente());
+			this.cuentas.descontarCredito(cuenta.getNroCelular(), ticketDeEstacionamiento.getCostoTotal());
+			this.notificarFinDeEstacionamientoDe(ticketDeEstacionamiento);
+			app.notificar("El estacionamiento comenzado a las " + ticketDeEstacionamiento.getHoraInicio() + ", finalizó correctamente a las " + ticketDeEstacionamiento.getHoraFin() + ". Su duración total fue de " + ticketDeEstacionamiento.getDuracion() + "y tuvo un costo total de: " + ticketDeEstacionamiento.getCostoTotal() + " pesos.");
+		} catch (Exception e){
+			app.notificar(e.getMessage());
+		}
 	}
 	
 	/* ################ SISTEMA DE MONITOREO ################ */
@@ -157,5 +155,4 @@ public class SistemaCentral implements ISistemaObservable {
 	public void notificarRecargaDeCreditoDe(RegistroRecarga recarga) {
 		this.entidades.stream().forEach(e -> e.actualizarConRecargaDeCredito(recarga));
 	}
-
 }

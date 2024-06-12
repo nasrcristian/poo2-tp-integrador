@@ -38,12 +38,26 @@ public class GestorEstacionamiento {
 	}
 
 	public EstacionamientoPuntual iniciarEstacionamientoPuntualConOrden(RegistroCompraPuntual ordenDeEstacionamientoPuntual) {
-		EstacionamientoPuntual nuevoEstacionamiento = new EstacionamientoPuntual(ordenDeEstacionamientoPuntual.getPatente(), this.calcularHorarioInicio(), this.calcularHorarioFin(ordenDeEstacionamientoPuntual.getCantHoras()), this.costoPorHora, ordenDeEstacionamientoPuntual);
-		estacionamientosPuntualesDelDia.add(nuevoEstacionamiento);
-		return nuevoEstacionamiento;
+		EstacionamientoPuntual ticketDeEstacionamiento = new EstacionamientoPuntual(ordenDeEstacionamientoPuntual.getPatente(), this.calcularHorarioInicio(), this.calcularHorarioFin(ordenDeEstacionamientoPuntual.getCantHoras()), this.costoPorHora, ordenDeEstacionamientoPuntual);
+		estacionamientosPuntualesDelDia.add(ticketDeEstacionamiento);
+		return ticketDeEstacionamiento;
+	}
+	
+	public EstacionamientoPorApp iniciarEstacionamientoPara(Cuenta cuenta) throws Exception {
+		int cantidadDeHorasPermitidas = this.calcularCantidadDeHorasParaSaldo(cuenta.getSaldo());
+		if (cantidadDeHorasPermitidas > 0) {
+			EstacionamientoPorApp ticketDeEstacionamiento = new EstacionamientoPorApp(cuenta.getPatente(), this.calcularHorarioInicio(), this.calcularHorarioFin(cantidadDeHorasPermitidas), this.costoPorHora, cuenta.getNroCelular());
+			estacionamientosPorAppDelDia.add(ticketDeEstacionamiento);
+			return ticketDeEstacionamiento;
+		} else {
+			throw new Exception("Saldo insuficiente. Estacionamiento no permitido.");
+		}
 	}
 
-	
+	private int calcularCantidadDeHorasParaSaldo(float saldo) {
+		return (int) (saldo / this.costoPorHora);
+	}
+
 	public LocalTime calcularHorarioInicio() {
 		LocalTime horaActual = LocalTime.now();
 		return horaActual.isBefore(horarioApertura) || horaActual.isAfter(horarioCierre) ? this.horarioApertura : horaActual;
@@ -53,10 +67,6 @@ public class GestorEstacionamiento {
 	public LocalTime calcularHorarioFin(int cantHoras) {
 		LocalTime horaCalculada = LocalTime.now().plusHours(cantHoras);
 		return horaCalculada.isAfter(horarioCierre) ? this.horarioCierre : horaCalculada;
-	}
-
-	public Estacionamiento iniciarEstacionamientoPorApp() {
-		return null;
 	}
 
 	public EstacionamientoPorApp finalizarEstacionamientoPara(String patente) throws Exception{
@@ -72,14 +82,4 @@ public class GestorEstacionamiento {
 		}
 		
 	}
-	
-	
-	
-	// ################### REVISAR #########################
-	public boolean haySaldoSuficiente(float saldoCliente) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
 }

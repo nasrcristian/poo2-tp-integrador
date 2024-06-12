@@ -32,7 +32,13 @@ public class AppCliente implements MovementSensor{
 		return this.nroCelular;
 	}
 
-	public SistemaCentral getSistema(){return this.sistema;}
+	public String getPatente() {
+		return this.patente;
+	}
+	
+	public SistemaCentral getSistema(){
+		return this.sistema;
+	}
 
 	//estado de la aplicacion
 	protected void setEstado(EstadoApp estado){
@@ -44,7 +50,7 @@ public class AppCliente implements MovementSensor{
 	}
 
 	public void iniciarEstacionamiento() {
-		this.estado.iniciarEstacionamiento(this, patente);
+		this.estado.iniciarEstacionamiento(this);
 	}
 
 	public void finalizarEstacionamiento() {
@@ -115,12 +121,14 @@ public class AppCliente implements MovementSensor{
 	}
 	
 	public void crearCuenta() {
-		this.sistema.crearCuenta(this.nroCelular, this.patente);
+		this.sistema.crearCuenta(this);
 	}
 
 	public void notificar(String mensaje) {
 		this.notificador.manejarNotificacion(mensaje);;
 	}
+
+	
 
 
 }

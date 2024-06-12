@@ -15,7 +15,7 @@ public class ConEstacionamiento extends EstadoApp {
     @Override
     protected void finalizarEstacionamiento(AppCliente appCliente) {
         int numeroCliente = appCliente.getNumero();
-        appCliente.getSistema().finalizarEstacionamientoPara(numeroCliente);
+        appCliente.getSistema().finalizarEstacionamientoSiPuedePara(numeroCliente);
         appCliente.setEstado(new SinEstacionamiento());
     }
 

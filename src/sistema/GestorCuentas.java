@@ -2,17 +2,20 @@ package sistema;
 
 import java.util.*;
 
+import appCliente.AppCliente;
 import registroCompras.RegistroRecarga;
 
 public class GestorCuentas {
-    private Set<Cuenta> cuentas;
+    private Map<Integer, Cuenta> cuentas;	
+    
+    // Cuenta es un Wrapper que asocia AppCliente con un saldo.
 
     public GestorCuentas(){
-        this.cuentas = new HashSet<Cuenta>();
+        this.cuentas = new HashMap<Integer, Cuenta>();
     }
 
-    protected void crearCuenta(int numCelular, String patente){
-        cuentas.add(new Cuenta(numCelular, patente));
+    protected void crearCuenta(AppCliente app){
+        cuentas.put(app.getNumero(), new Cuenta(app));
     }
 
     protected String getPatenteSiPuede(int nroCelular) throws Exception {
@@ -24,8 +27,8 @@ public class GestorCuentas {
         }
     }
 
-    protected Optional<Cuenta> getCuenta(int nroCelular) {
-        return this.cuentas.stream().filter(cuenta -> cuenta.getNroCelular() == nroCelular).findFirst();
+    protected Optional<Cuenta> getCuenta(Integer nroCelular) {
+    	return Optional.of(this.cuentas.get(nroCelular));
     }
 
     protected float getSaldo(int nroCelular){

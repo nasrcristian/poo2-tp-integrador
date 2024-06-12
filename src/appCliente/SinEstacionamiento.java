@@ -12,9 +12,9 @@ public class SinEstacionamiento extends EstadoApp {
     }
 
     @Override
-    protected void iniciarEstacionamiento(AppCliente appCliente, String patente) {
+    protected void iniciarEstacionamiento(AppCliente appCliente) {
         if(appCliente.haySaldoSuficiente()){
-            appCliente.getSistema().iniciarEstacionamientoPara(patente);
+            appCliente.getSistema().iniciarEstacionamientoPorApp(appCliente.getNumero());
             appCliente.setEstado(new ConEstacionamiento());
         }else{
             appCliente.notificar("Saldo insuficiente. Estacionamiento no permitido.");
