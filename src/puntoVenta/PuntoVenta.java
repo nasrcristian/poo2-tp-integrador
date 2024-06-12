@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import sistema.SistemaCentral;
-import registroCompras.RegistroCompra;
 import registroCompras.RegistroRecarga;
 
 public class PuntoVenta {
@@ -44,7 +43,6 @@ public class PuntoVenta {
     public void compraPuntual(String patente, int cantHoras){
     	
     }
-
 
 	public int getNroControl() {
 		return this.numeroDeControl;

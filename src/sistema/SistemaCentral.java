@@ -7,18 +7,13 @@ import java.util.Set;
 
 import appCliente.AppCliente;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import inspector.Inspector;
-import puntoVenta.PuntoVenta;
 import registroCompras.RegistroCompra;
 import registroCompras.RegistroRecarga;
 import sistema.entidadObservadora.Entidad;
 import sistema.estacionamiento.Estacionamiento;
-import sistema.estacionamiento.GestorEstacionamiento;
 import sistema.sistemaObservable.SistemaObservable;
 import zona.ZonaDeEstacionamientoMedido;
 
@@ -49,6 +44,26 @@ public class SistemaCentral implements SistemaObservable {
 		return this.cuentas.getSaldo(nroCelular);
 	}
 
+	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga) throws Exception{
+		Optional <Cuenta> cuentaBuscada = this.cuentas.getCuenta(ordenDeRecarga.getCelular());
+		if (cuentaBuscada.isPresent()) {
+			this.cargarCreditoDeOrden(ordenDeRecarga, cuentaBuscada.get());
+		} else {
+			throw new Exception("La orden de recarga es invalida ya que no hay cuenta asociada a ese numero");
+		}
+	}
+
+	private void cargarCreditoDeOrden(RegistroRecarga ordenDeRecarga, Cuenta cuenta) {
+		cuenta.cargarCredito(ordenDeRecarga.getMonto());
+		this.registrarCompra(ordenDeRecarga);
+		this.notificarRecargaDeCreditoDe(ordenDeRecarga);
+	}
+
+	//NOTE: metodo necesario? en publico?
+	public void registrarCompra(RegistroCompra registroDeCompra) {
+		this.registros.agregarRegistro(registroDeCompra);
+	}
+
 	//metodos infraccion
 	public void generarInfraccion(String patente, Inspector inspector) {
 		this.infracciones.generarInfraccion(patente, inspector);
@@ -67,16 +82,24 @@ public class SistemaCentral implements SistemaObservable {
 		return this.estacionamientos.estaVigente(patente);
 	}
 
-	public void iniciarEstacionamientoPara(AppCliente appCliente) {
+	public boolean haySaldoSuficiente(AppCliente appCliente){
+		float saldoCliente = consultarSaldoDe(appCliente.getNumero());
+		return this.estacionamientos.haySaldoSuficiente(saldoCliente);
+	}
+
+	public void iniciarEstacionamientoPara(String patente) {
+		// TODO Auto-generated method stub
+		this.estacionamientos.iniciarEstacionamiento(patente);
+	}
+
+	public void finalizarEstacionamientoPara(int numeroCelular) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void finalizarEstacionamientoPara(AppCliente appCliente) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void generarEstacionamientoPuntual(RegistroCompra registroPuntual){
 
+	}
 	
 	/* ### SISTEMA DE MONITOREO ### */
 	@Override
@@ -103,40 +126,4 @@ public class SistemaCentral implements SistemaObservable {
 	public void notificarRecargaDeCreditoDe(RegistroRecarga recarga) {
 		this.entidades.stream().forEach(e -> e.actualizarConRecargaDeCredito(recarga));
 	}
-
-
-
-	/* public void cargarCreditoDelNumeroDesde(int numero, Float monto, PuntoVenta puntoVenta) throws Exception{
-		Optional <Cuenta> cuentaBuscada = this.getCuenta(numero);
-		if (cuentaBuscada.isPresent()) {
-			cuentaBuscada.get().cargarCredito(monto);
-			RegistroCompra registro = new RegistroRecarga(puntoVenta.getNroControl(), puntoVenta, LocalDate.now(), LocalTime.now(), numero, monto);
-		} else {
-			throw new Exception("No hay una cuenta asociada a ese numero");
-		}
-	} */
-
-	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga) throws Exception{
-		Optional <Cuenta> cuentaBuscada = this.cuentas.getCuenta(ordenDeRecarga.getCelular());
-		if (cuentaBuscada.isPresent()) {
-			this.cargarCreditoDeOrden(ordenDeRecarga, cuentaBuscada.get());
-		} else {
-			throw new Exception("La orden de recarga es invalida ya que no hay cuenta asociada a ese numero");
-		}
-	}
-	
-	private void cargarCreditoDeOrden(RegistroRecarga ordenDeRecarga, Cuenta cuenta) {
-		cuenta.cargarCredito(ordenDeRecarga.getMonto());
-		this.registrarCompra(ordenDeRecarga);
-		this.notificarRecargaDeCreditoDe(ordenDeRecarga);
-	}
-
-
-	public void registrarCompra(RegistroCompra registroDeCompra) {
-		this.registros.agregarRegistro(registroDeCompra);
-		
-	}
-
-
-
 }

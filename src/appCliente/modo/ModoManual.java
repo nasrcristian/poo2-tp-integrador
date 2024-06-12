@@ -24,5 +24,4 @@ public class ModoManual extends ModoDeApp{
 	protected void manejarFinalizarEstacionamiento(AppCliente app) {
 		// No tiene ningun comportamiento especial.
 	}
-S
 }

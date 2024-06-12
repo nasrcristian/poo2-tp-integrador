@@ -20,9 +20,5 @@ public class ModoAutomatico extends ModoDeApp{
 	}
 
 	@Override
-	protected void manejarFinalizarEstacionamiento(AppCliente app) {
-		app.finalizarEstacionamiento();
-		
-	}
-
+	protected void manejarFinalizarEstacionamiento(AppCliente app) {app.finalizarEstacionamiento();}
 }

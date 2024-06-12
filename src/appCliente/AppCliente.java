@@ -11,6 +11,7 @@ import sistema.SistemaCentral;
 public class AppCliente implements MovementSensor{
 	private String patente;
 	private int nroCelular;
+	private EstadoApp estado;
 	private ModoDeApp modo;
 	private SistemaCentral sistema;
 	private Notificador notificador;
@@ -21,6 +22,7 @@ public class AppCliente implements MovementSensor{
 		this.patente = patente;
 		this.nroCelular = nro;
 		this.sistema = sistema;
+		this.estado = new SinEstacionamiento(); //por defecto la app no tiene estacionamiento.
 		this.setModo(new ModoManual()); // Por defecto la app se encuentra en modo manual.
 		this.setAsistencia(new AsistenciaActivada());
 		this.notificador = notificador; // Es un objeto externo que se encargaría de manejar las notificaciones que reciba la app.
@@ -29,7 +31,26 @@ public class AppCliente implements MovementSensor{
 	public int getNumero() {
 		return this.nroCelular;
 	}
-	
+
+	public SistemaCentral getSistema(){return this.sistema;}
+
+	//estado de la aplicacion
+	protected void setEstado(EstadoApp estado){
+		this.estado = estado;
+	}
+
+	public boolean haySaldoSuficiente(){
+		return this.sistema.haySaldoSuficiente(this);
+	}
+
+	public void iniciarEstacionamiento() {
+		this.estado.iniciarEstacionamiento(this, patente);
+	}
+
+	public void finalizarEstacionamiento() {
+		this.estado.finalizarEstacionamiento(this);
+	}
+
 	// Modo de la aplicacion
 	private void setModo(ModoDeApp m) {
 		this.modo = m;
@@ -42,13 +63,13 @@ public class AppCliente implements MovementSensor{
 	public void activarModoManual() {
 		this.setModo(new ModoManual());
 	}
-	
-	
-	
-	
+
+
+
+
 	
 	// Asistencia al usuario
-	
+
 	private void setAsistencia(AsistenciaAlUsuario a) {
 		this.asistencia = a;
 	}
@@ -87,14 +108,6 @@ public class AppCliente implements MovementSensor{
 	
 	
 	// Manejo de la app con el sistema principal
-	public void iniciarEstacionamiento() {
-		this.sistema.iniciarEstacionamientoPara(this);
-	}
-	
-	public void finalizarEstacionamiento() {
-		this.sistema.finalizarEstacionamientoPara(this);
-	}
-	
 	public float consultaSaldo() {
 		return this.sistema.consultarSaldoDe(this.nroCelular);
 	}
