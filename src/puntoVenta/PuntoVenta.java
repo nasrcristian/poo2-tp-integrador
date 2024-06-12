@@ -5,7 +5,7 @@ import java.time.LocalTime;
 
 import sistema.SistemaCentral;
 import registroCompras.RegistroCompra;
-import registroCompras.RegistroCompraHoras;
+import registroCompras.RegistroCompraPuntual;
 import registroCompras.RegistroRecarga;
 
 public class PuntoVenta {
@@ -29,8 +29,9 @@ public class PuntoVenta {
     }
 
     public void compraPuntual(String patente, int cantHoras){
-    	RegistroCompraHoras ordenDeEstacionamientoPuntual = new RegistroCompraHoras(this.numeroDeControl, this, LocalDate.now(), LocalTime.now(), patente, cantHoras);
-    	// TODO Terminar implementacion
+    	RegistroCompraPuntual ordenDeEstacionamientoPuntual = new RegistroCompraPuntual(this.numeroDeControl, this, LocalDate.now(), LocalTime.now(), patente, cantHoras);
+    	this.sistema.iniciarEstacionamientoPuntual(ordenDeEstacionamientoPuntual);
+    	this.aumentarNumeroDeControl();
     }
 
 	public int getNroControl() {

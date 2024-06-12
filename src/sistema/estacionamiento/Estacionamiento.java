@@ -1,17 +1,20 @@
 package sistema.estacionamiento;
 
+import java.time.Duration;
 import java.time.LocalTime;
 
-public class Estacionamiento {
+public abstract class Estacionamiento {
 	private String patente;
 	private LocalTime horaInicio;
 	private LocalTime horaFin;
+	private float costoPorHora;
 	
 	
-	public Estacionamiento(String patente, LocalTime horaInicio, LocalTime horaFin) {
+	public Estacionamiento(String patente, LocalTime horaInicio, LocalTime horaFin, float costoPorHora) {
 		this.patente = patente;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
+		this.costoPorHora = costoPorHora;
 	}
 
 
@@ -29,22 +32,25 @@ public class Estacionamiento {
 		return this.horaFin;
 	}
 
-	//TODO revisar para compra puntual: la compra puede ser de otro dia pero respetar los horarios
-	public boolean estaVigente(LocalTime horarioApertura, LocalTime horarioCierre) {
-		return this.horaInicio.isAfter(horarioApertura) && this.horaFin.isBefore(horarioCierre) && this.horaFin.isAfter(LocalTime.now());
+
+	public boolean estaVigente() {
+		LocalTime horaActual = LocalTime.now();
+		return  horaActual.isBefore(this.horaFin) && horaActual.isAfter(this.horaInicio);
+		// La verificacion de que la hora actual es antes del horario de inicio del estacionamiento es por si se hace una compra de un estacionamiento para el dia siguiente.
 	}
 
 	//metodos para evento de fin estacionamiento
-	public int getDuracion() throws Exception {
-		this.vertificarVigencia();
-		return this.horaInicio.getHour() - this.horaFin.getHour();
+	public int getDuracion() {
+		return Duration.between(this.horaInicio, this.horaFin).toHoursPart();
+	}
+	
+	protected void setHoraFin(LocalTime nuevoHorarioFin) {
+		this.horaFin = nuevoHorarioFin;
 	}
 
-	private void vertificarVigencia() throws Exception {
-		if(this.estaVigente()){throw new Exception("No hay estacionamiento vigente para consultar duracion");}
-	}
 
-	private boolean estaVigente(){
-		return this.horaInicio.isBefore(LocalTime.now()) && this.horaFin.isAfter(LocalTime.now());
+	public float getCostoTotal() {
+		return costoPorHora * this.getDuracion();
 	}
 }
+

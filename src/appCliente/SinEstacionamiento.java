@@ -7,7 +7,7 @@ public class SinEstacionamiento extends EstadoApp {
     }
 
     @Override
-    public void finalizarEstacionamiento(AppCliente appCliente) {
+    protected void finalizarEstacionamiento(AppCliente appCliente) {
         //// no hace nada porque aun no tiene un estacionamiento vigente
     }
 
@@ -22,5 +22,7 @@ public class SinEstacionamiento extends EstadoApp {
     }
 
     @Override
-    public boolean tieneEstacionamiento() {return false;}
+    protected boolean tieneEstacionamiento() {
+    	return false;
+    }
 }

@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 import inspector.Inspector;
 import registroCompras.RegistroCompra;
-import registroCompras.RegistroCompraHoras;
+import registroCompras.RegistroCompraPuntual;
 import registroCompras.RegistroRecarga;
 import sistema.entidadObservadora.IEntidad;
 import sistema.estacionamiento.Estacionamiento;
+import sistema.estacionamiento.EstacionamientoPorApp;
 import sistema.estacionamiento.GestorEstacionamiento;
 import sistema.sistemaObservable.ISistemaObservable;
 import zona.ZonaDeEstacionamientoMedido;
@@ -46,17 +47,17 @@ public class SistemaCentral implements ISistemaObservable {
 		return this.cuentas.getSaldo(nroCelular);
 	}
 	
-	
+	/*  Comentado por ahora, en caso de que no sea necesario vuela...
 	//NOTE: metodo necesario? en publico?
 	public void registrarCompra(RegistroCompra registroDeCompra) {
 		this.registros.agregarRegistro(registroDeCompra);
 	}
-
+	*/
 	//metodos infraccion
 	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga){
 		try {
 			this.cuentas.cargarCreditoSiPuede(ordenDeRecarga);
-			this.registrarCompra(ordenDeRecarga);			 // Esto solo se ejecuta si no hay una excepción.
+			this.registros.agregarRegistro(ordenDeRecarga);			 // Esto solo se ejecuta si no hay una excepción.
 			this.notificarRecargaDeCreditoDe(ordenDeRecarga);// Esto solo se ejecuta si no hay una excepción.
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -70,6 +71,14 @@ public class SistemaCentral implements ISistemaObservable {
 	}
 
 	//mensajes estacionamiento
+	
+	public void iniciarEstacionamientoPuntual(RegistroCompraPuntual ordenDeEstacionamientoPuntual) {
+		Estacionamiento ticketEstacionamiento = this.estacionamientos.iniciarEstacionamientoPuntualConOrden(ordenDeEstacionamientoPuntual);
+		this.registros.agregarRegistro(ordenDeEstacionamientoPuntual);
+		this.notificarInicioDeEstacionamientoDe(ticketEstacionamiento);
+	}
+	
+	
 	public boolean tieneEstacionamientoVigente(int nroCelular) { // Permite que la verificacion sea sin necesidad de ingresar patente.
 		try {
 			return this.tieneEstacionamientoVigente(this.cuentas.getPatenteSiPuede(nroCelular)); // getPatente puede tirar una excepción ya que la cuenta puede no estar asociada.
@@ -85,10 +94,6 @@ public class SistemaCentral implements ISistemaObservable {
 	public boolean haySaldoSuficiente(AppCliente appCliente){
 		float saldoCliente = consultarSaldoDe(appCliente.getNumero());
 		return this.estacionamientos.haySaldoSuficiente(saldoCliente);
-	}
-
-	public void generarEstacionamientoPuntual(RegistroCompraHoras registroPuntual){
-		// this.iniciarEstacionamientoPara(registroPuntual.getPatente()); TODO resolver implementacion
 	}
 	
 	/*
@@ -112,15 +117,22 @@ public class SistemaCentral implements ISistemaObservable {
 	*/
 
 	public void finalizarEstacionamientoPara(int numeroCelular){
-		// TODO Auto-generated method stub
-		// this.estacionamientos.finalizarEstacionamiento(patente, this); //TODO pasar appCliente o patente para poder sacar los datos de la aplicacion
-	}
-
-	public void descontarCredito(int nroCelular ,float monto) throws Exception {
-		this.cuentas.descontarCredito(nroCelular, monto); //TODO ver como implementar bien
+		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroCelular);
+		if (cuentaBuscada.isPresent()) {
+			Cuenta cuenta = cuentaBuscada.get();
+			AppCliente app = cuenta.getApp();
+			try {
+				EstacionamientoPorApp ticketDeEstacionamiento = this.estacionamientos.finalizarEstacionamientoPara(cuenta.getPatente());
+				this.cuentas.descontarCredito(numeroCelular, ticketDeEstacionamiento.getCostoTotal());
+				this.notificarFinDeEstacionamientoDe(ticketDeEstacionamiento);
+				app.notificar("El estacionamiento comenzado a las " + ticketDeEstacionamiento.getHoraInicio() + ", finalizó correctamente a las " + ticketDeEstacionamiento.getHoraFin() + ". Su duración total fue de " + ticketDeEstacionamiento.getDuracion() + "y tuvo un costo total de: " + ticketDeEstacionamiento.getCostoTotal() + " pesos.");
+			} catch (Exception e){
+				app.notificar(e.getMessage());
+			}
+		}		// this.estacionamientos.finalizarEstacionamiento(patente, this); //TODO pasar appCliente o patente para poder sacar los datos de la aplicacion
 	}
 	
-	/* ### SISTEMA DE MONITOREO ### */
+	/* ################ SISTEMA DE MONITOREO ################ */
 	@Override
 	public void suscribirEntidad(IEntidad unaEntidad) {
 		this.entidades.add(unaEntidad);
@@ -145,4 +157,5 @@ public class SistemaCentral implements ISistemaObservable {
 	public void notificarRecargaDeCreditoDe(RegistroRecarga recarga) {
 		this.entidades.stream().forEach(e -> e.actualizarConRecargaDeCredito(recarga));
 	}
+
 }
