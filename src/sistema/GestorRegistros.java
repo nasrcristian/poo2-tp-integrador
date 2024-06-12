@@ -17,6 +17,7 @@ public class GestorRegistros {
         this.registros.add(registro);
     }
 
+    //TODO REVISAR POSIBLE ERROR
     public void eliminarRegistro(Integer nroControl){
         this.registros.removeIf(registro -> registro.getNumeroControl().equals(nroControl));
     }

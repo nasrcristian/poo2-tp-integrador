@@ -26,4 +26,11 @@ public class GestorCuentas {
         Optional<Cuenta> cuentaBuscada = this.getCuenta(nroCelular);
         return cuentaBuscada.map(Cuenta::getSaldo).orElse(0F);
     }
+
+    protected void descontarCredito(int nroCelular, float monto) throws Exception {
+        Optional<Cuenta> cuentaBuscada = this.getCuenta(nroCelular);
+        if (cuentaBuscada.isPresent()){
+            cuentaBuscada.get().descontarCredito(monto);
+        }else{throw new Exception("El numero ingresado no tiene ninguna patente registrada.");}
+    }
 }

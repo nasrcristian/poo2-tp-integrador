@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import inspector.Inspector;
 import registroCompras.RegistroCompra;
+import registroCompras.RegistroCompraHoras;
 import registroCompras.RegistroRecarga;
 import sistema.entidadObservadora.Entidad;
 import sistema.estacionamiento.Estacionamiento;
@@ -87,18 +88,23 @@ public class SistemaCentral implements SistemaObservable {
 		return this.estacionamientos.haySaldoSuficiente(saldoCliente);
 	}
 
+	public void generarEstacionamientoPuntual(RegistroCompraHoras registroPuntual){
+		this.iniciarEstacionamientoPara(registroPuntual.getPatente());
+	}
+
 	public void iniciarEstacionamientoPara(String patente) {
 		// TODO Auto-generated method stub
-		this.estacionamientos.iniciarEstacionamiento(patente);
+		this.estacionamientos.iniciarEstacionamiento(patente, this);
+
 	}
 
-	public void finalizarEstacionamientoPara(int numeroCelular) {
+	public void finalizarEstacionamientoPara(int numeroCelular){
 		// TODO Auto-generated method stub
-		
+		this.estacionamientos.finalizarEstacionamiento(patente, this); //TODO pasar appCliente o patente para poder sacar los datos de la aplicacion
 	}
 
-	public void generarEstacionamientoPuntual(RegistroCompra registroPuntual){
-
+	public void descontarCredito(,float monto){
+		this.cuentas.descontarCredito(nroCelular, monto); //TODO ver como implementar bien
 	}
 	
 	/* ### SISTEMA DE MONITOREO ### */

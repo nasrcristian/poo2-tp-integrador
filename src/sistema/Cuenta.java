@@ -24,7 +24,12 @@ public class Cuenta {
 		return this.patente;
 	}
 
-	public void cargarCredito(Float monto) {
+	public void cargarCredito(float monto) {
 		this.saldo += monto;
+	}
+
+	//TODO: dejar negativo, salvar hasta 0 o no permitir la transaccion?
+	public void descontarCredito(float monto){
+		this.saldo -= monto;
 	}
 }
