@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import sistema.SistemaCentral;
+import registroCompras.RegistroCompra;
+import registroCompras.RegistroCompraHoras;
 import registroCompras.RegistroRecarga;
 
 public class PuntoVenta {
@@ -16,23 +18,9 @@ public class PuntoVenta {
 		this.numeroDeControl = 1;
 	}
 	
-	
-    /* public void cargarCredito(int numeroDeCelular, Float monto){
-    	try {
-			this.sistema.cargarCreditoDelNumeroDesde(numeroDeCelular, monto, this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	this.aumentarNumeroDeControl();
-    } */
-	
 	public void cargarCredito(int numeroDeCelular, Float monto){
     	RegistroRecarga ordenDeRecarga = new RegistroRecarga(this.numeroDeControl, this, LocalDate.now(), LocalTime.now(), numeroDeCelular, monto);
-		try {
-			this.sistema.cargarCreditoDeLaOrdenSiPuede(ordenDeRecarga);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.sistema.cargarCreditoDeLaOrdenSiPuede(ordenDeRecarga);
     	this.aumentarNumeroDeControl();
     }
     
@@ -41,7 +29,8 @@ public class PuntoVenta {
     }
 
     public void compraPuntual(String patente, int cantHoras){
-    	
+    	RegistroCompraHoras ordenDeEstacionamientoPuntual = new RegistroCompraHoras(this.numeroDeControl, this, LocalDate.now(), LocalTime.now(), patente, cantHoras);
+    	// TODO Terminar implementacion
     }
 
 	public int getNroControl() {

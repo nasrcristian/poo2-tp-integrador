@@ -31,8 +31,7 @@ public class Estacionamiento {
 
 	//TODO revisar para compra puntual: la compra puede ser de otro dia pero respetar los horarios
 	public boolean estaVigente(LocalTime horarioApertura, LocalTime horarioCierre) {
-		LocalTime horaActual = LocalTime.now();
-		return this.horaInicio.isAfter(horarioApertura) && this.horaFin.isBefore(horarioCierre) && this.horaFin.isAfter(horaActual)  ;
+		return this.horaInicio.isAfter(horarioApertura) && this.horaFin.isBefore(horarioCierre) && this.horaFin.isAfter(LocalTime.now());
 	}
 
 	//metodos para evento de fin estacionamiento

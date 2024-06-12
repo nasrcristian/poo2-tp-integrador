@@ -3,7 +3,7 @@ package sistema.entidadObservadora;
 import registroCompras.RegistroRecarga;
 import sistema.estacionamiento.Estacionamiento;
 
-public interface Entidad {
+public interface IEntidad {
 
 	public void actualizarInicioDeEstacionamientoDe(Estacionamiento estacionamiento);
 	

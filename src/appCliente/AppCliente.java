@@ -79,7 +79,9 @@ public class AppCliente implements MovementSensor{
 	}
 	
 	public void desactivarAsistencia() {
-		this.setAsistencia(new AsistenciaDesactivada());
+		this.setAsistencia(new AsistenciaDesactivada()); 
+		// En caso de que la asistencia este desactivada, el modo automático no va a hacer nada y el modo manual no va a notificar. 
+		// Pero cuando este sea activado va a volver actuar sin necesidad de activar nuevamente el mismo.
 	}
 	
 	@Override
