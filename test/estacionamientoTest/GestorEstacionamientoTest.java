@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class GestorEstacionamientoTest {
 
@@ -36,21 +35,22 @@ class GestorEstacionamientoTest {
     }
 
     @Test
-    void testNoEstaVigente() {
-        String patente = "AAA000";
-        assertFalse(gestor.estaVigente(patente));
-    }
-
-    @Test
     void testEstaVigente() {
         String patente = "AAA000";
-        assertFalse(gestor.estaVigente(patente));
+        RegistroCompraPuntual ordenCompraMock = mock(RegistroCompraPuntual.class);
+        when(ordenCompraMock.getPatente()).thenReturn(patente);
+        when(ordenCompraMock.getCantHoras()).thenReturn(2);
+        gestor.iniciarEstacionamientoPuntualConOrden(ordenCompraMock);
+        assertTrue(gestor.estaVigente(patente));
     }
 
     @Test
     void testIniciarEstacionamientoPuntualConOrden() {
         RegistroCompraPuntual ordenCompraMock = mock(RegistroCompraPuntual.class);
-        assertTrue(gestor.iniciarEstacionamientoPuntualConOrden(ordenCompraMock) instanceof EstacionamientoPuntual);
+        when(ordenCompraMock.getPatente()).thenReturn("AAA000");
+        when(ordenCompraMock.getCantHoras()).thenReturn(2);
+        EstacionamientoPuntual estacionamientoPuntualTest = gestor.iniciarEstacionamientoPuntualConOrden(ordenCompraMock);
+        assertTrue(gestor.getEstacionamientosPuntualesDelDia().contains(estacionamientoPuntualTest));
     }
 
     @Test
@@ -67,13 +67,35 @@ class GestorEstacionamientoTest {
     @Test
     void testIniciarEstacionamientoPara() {
         Cuenta cuentaMock = mock(Cuenta.class);
-        assertThrows(Exception.class, () -> gestor.iniciarEstacionamientoPara(cuentaMock));
+        String patente = "AAA000";
+        int numeroCelular = 123456789;
+        when(cuentaMock.getSaldo()).thenReturn(10f);
+        when(cuentaMock.getPatente()).thenReturn(patente);
+        when(cuentaMock.getNroCelular()).thenReturn(numeroCelular);
+        try{
+            gestor.iniciarEstacionamientoPara(cuentaMock);
+            assertTrue(gestor.estaVigente(cuentaMock.getPatente()));
+        }catch (Exception e){
+            fail("Test fallo: " + e.getMessage());
+        }
     }
 
     @Test
     void testFinalizarEstacionamientoPara() {
+        Cuenta cuentaMock = mock(Cuenta.class);
         String patente = "AAA000";
-        assertThrows(Exception.class, () -> gestor.finalizarEstacionamientoPara(patente));
+        int numeroCelular = 123456789;
+        when(cuentaMock.getSaldo()).thenReturn(10f);
+        when(cuentaMock.getPatente()).thenReturn(patente);
+        when(cuentaMock.getNroCelular()).thenReturn(numeroCelular);
+        try{
+            gestor.iniciarEstacionamientoPara(cuentaMock);
+            assertTrue(gestor.estaVigente(cuentaMock.getPatente()));
+            gestor.finalizarEstacionamientoPara(cuentaMock.getPatente());
+            assertFalse(gestor.estaVigente(cuentaMock.getPatente()));
+        }catch (Exception e){
+            fail("Test fallo: " + e.getMessage());
+        }
     }
 
     @Test

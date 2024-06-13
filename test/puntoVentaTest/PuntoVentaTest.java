@@ -1,12 +1,15 @@
 package puntoVentaTest;
 
+import appCliente.AppCliente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import puntoVenta.PuntoVenta;
+import sistema.Cuenta;
+import sistema.GestorCuentas;
 import sistema.SistemaCentral;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class PuntoVentaTest {
 
@@ -24,6 +27,10 @@ class PuntoVentaTest {
     void testCargarCredito() {
         int numeroCelular = 123456789;
         float monto = 104.5f;
+        AppCliente appClienteMock = mock(AppCliente.class);
+        when(appClienteMock.getNumero()).thenReturn(numeroCelular);
+        GestorCuentas cuentasMock = mock(GestorCuentas.class);
+        sistemaMock.crearCuenta(appClienteMock);
         puntoVenta.cargarCredito(numeroCelular, monto);
         assertEquals(monto, sistemaMock.consultarSaldoDe(numeroCelular)); //TODO: Revisar si lo hice mal o no funciona por algun motivo
     }
