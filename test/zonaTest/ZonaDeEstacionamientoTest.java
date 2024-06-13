@@ -23,7 +23,7 @@ public class ZonaDeEstacionamientoTest {
     public void setUp() {
     	sistemaMock = mock(SistemaCentral.class);
     	inspectorMock = mock(Inspector.class);
-        zona = new ZonaDeEstacionamiento(sistemaMock, inspectorMock);
+        zona = new ZonaDeEstacionamiento(inspectorMock);
         
     }
     

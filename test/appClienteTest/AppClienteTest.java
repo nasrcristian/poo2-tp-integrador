@@ -18,7 +18,6 @@ public class AppClienteTest {
     private AppCliente appCliente;
     private SistemaCentral sistemaMock;
     private Notificador notificadorMock;
-    private AsistenciaAlUsuario asistenciaMock;
     private String patente = "AAA000";
     private int nroCelular = 123456789;
 
@@ -26,7 +25,7 @@ public class AppClienteTest {
     public void setUp() {
         sistemaMock = mock(SistemaCentral.class);
         notificadorMock = mock(Notificador.class);
-        asistenciaMock = mock(AsistenciaAlUsuario.class);
+        mock(AsistenciaAlUsuario.class);
         appCliente = new AppCliente(patente, nroCelular, sistemaMock, notificadorMock);
         
     }
