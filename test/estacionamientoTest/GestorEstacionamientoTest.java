@@ -55,13 +55,14 @@ class GestorEstacionamientoTest {
 
     @Test
     void testCalcularHorarioInicio() {
-        assertEquals(LocalTime.now(), gestor.calcularHorarioInicio());
+        assertEquals(LocalTime.now().getHour(), gestor.calcularHorarioInicio().getHour());
     }
 
     @Test
     void testCalcularHorarioFin() {
         int cantHoras = 10;
-        assertEquals(LocalTime.now().plusHours(cantHoras),gestor.calcularHorarioFin(cantHoras));
+        LocalTime horaEsperada = LocalTime.now().plusHours(cantHoras);
+        assertEquals(horaEsperada.isAfter(horarioCierre) ? this.horarioCierre.getHour() : horaEsperada.getHour(), gestor.calcularHorarioFin(cantHoras).getHour());
     }
 
     @Test

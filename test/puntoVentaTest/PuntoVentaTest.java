@@ -15,12 +15,12 @@ class PuntoVentaTest {
 
     private PuntoVenta puntoVenta;
     private SistemaCentral sistemaMock;
-    private int numeroDeControl;
 
     @BeforeEach
     void setUp() {
         sistemaMock = mock(SistemaCentral.class);
         puntoVenta = new PuntoVenta(sistemaMock);
+        
     }
 
     @Test
