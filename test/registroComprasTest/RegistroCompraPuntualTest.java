@@ -9,8 +9,8 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import puntoVenta.PuntoVenta;
-import registroCompras.RegistroCompraPuntual;
+import sistema.registros.RegistroCompraPuntual;
+import sistema.zona.PuntoVenta;
 
 public class RegistroCompraPuntualTest {
     private RegistroCompraPuntual registroCompra;

@@ -1,12 +1,14 @@
 package puntoVentaTest;
 
 import appCliente.AppCliente;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import puntoVenta.PuntoVenta;
-import sistema.Cuenta;
-import sistema.GestorCuentas;
+
 import sistema.SistemaCentral;
+import sistema.cuentas.Cuenta;
+import sistema.cuentas.GestorCuentas;
+import sistema.zona.PuntoVenta;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

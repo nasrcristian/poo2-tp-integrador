@@ -1,15 +1,17 @@
-package appCliente;
+package appCliente.estado;
 
-public class ConEstacionamiento extends EstadoApp {
+import appCliente.AppCliente;
+
+public class ConEstacionamiento implements EstadoApp {
 
     @Override
-    protected void iniciarEstacionamiento(AppCliente appCliente) {
+	public void iniciarEstacionamiento(AppCliente appCliente) {
         // no hace nada porque ya tiene un estacionamiento vigente
     }
 
     //Asumimos que tiene una estacionamiento iniciado ya que es la unica forma de que la APP haya pasado al estado ConEstacionamiento
     @Override
-    protected void finalizarEstacionamiento(AppCliente appCliente) {
+	public void finalizarEstacionamiento(AppCliente appCliente) {
         int numeroCliente = appCliente.getNumero();
         appCliente.getSistema().finalizarEstacionamientoSiPuedePara(numeroCliente);
         appCliente.setEstado(new SinEstacionamiento());

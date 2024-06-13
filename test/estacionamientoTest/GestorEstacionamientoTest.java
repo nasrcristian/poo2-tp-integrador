@@ -2,13 +2,14 @@ package estacionamientoTest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import registroCompras.RegistroCompraPuntual;
-import sistema.Cuenta;
+
 import sistema.SistemaCentral;
+import sistema.cuentas.Cuenta;
 import sistema.estacionamiento.Estacionamiento;
 import sistema.estacionamiento.EstacionamientoPorApp;
 import sistema.estacionamiento.EstacionamientoPuntual;
 import sistema.estacionamiento.GestorEstacionamiento;
+import sistema.registros.RegistroCompraPuntual;
 
 import java.time.LocalTime;
 import java.util.List;

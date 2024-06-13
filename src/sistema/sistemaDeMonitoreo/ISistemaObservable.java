@@ -1,8 +1,7 @@
-package sistema.sistemaObservable;
+package sistema.sistemaDeMonitoreo;
 
-import registroCompras.RegistroRecarga;
-import sistema.entidadObservadora.IEntidad;
 import sistema.estacionamiento.Estacionamiento;
+import sistema.registros.RegistroRecarga;
 
 public interface ISistemaObservable {
     public void suscribirEntidad(IEntidad unaEntidad);

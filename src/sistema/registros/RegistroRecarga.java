@@ -1,7 +1,7 @@
-package registroCompras;
+package sistema.registros;
 
 import appCliente.AppCliente;
-import puntoVenta.PuntoVenta;
+import sistema.zona.PuntoVenta;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

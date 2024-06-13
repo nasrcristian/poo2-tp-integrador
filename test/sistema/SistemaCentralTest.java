@@ -5,17 +5,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import appCliente.AppCliente;
-import registroCompras.RegistroCompraPuntual;
-import registroCompras.RegistroRecarga;
-import sistema.Cuenta;
 import sistema.SistemaCentral;
-import sistema.entidadObservadora.IEntidad;
+import sistema.cuentas.Cuenta;
+import sistema.cuentas.GestorCuentas;
 import sistema.estacionamiento.Estacionamiento;
 import sistema.estacionamiento.EstacionamientoPorApp;
 import sistema.estacionamiento.EstacionamientoPuntual;
 import sistema.estacionamiento.GestorEstacionamiento;
-import zona.Inspector;
-import zona.ZonaDeEstacionamiento;
+import sistema.registros.GestorRegistros;
+import sistema.registros.RegistroCompraPuntual;
+import sistema.registros.RegistroRecarga;
+import sistema.sistemaDeMonitoreo.IEntidad;
+import sistema.zona.ZonaDeEstacionamiento;
+import sistema.zona.infracciones.GestorInfracciones;
+import sistema.zona.infracciones.Inspector;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

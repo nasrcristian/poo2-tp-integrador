@@ -1,6 +1,4 @@
-package sistema;
-
-import registroCompras.RegistroCompra;
+package sistema.registros;
 
 import java.util.ArrayList;
 import java.util.List;

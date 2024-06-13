@@ -1,9 +1,9 @@
-package registroCompras;
-
-import puntoVenta.PuntoVenta;
+package sistema.registros;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import sistema.zona.PuntoVenta;
 
 public abstract class RegistroCompra {
     private Integer numeroControl;

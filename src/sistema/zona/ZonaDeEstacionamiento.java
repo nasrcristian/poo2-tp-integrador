@@ -1,7 +1,7 @@
-package zona;
+package sistema.zona;
 
-import puntoVenta.PuntoVenta;
 import sistema.SistemaCentral;
+import sistema.zona.infracciones.Inspector;
 
 import java.util.ArrayList;
 import java.util.List;

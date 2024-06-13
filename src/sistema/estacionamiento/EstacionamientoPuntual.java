@@ -2,7 +2,7 @@ package sistema.estacionamiento;
 
 import java.time.LocalTime;
 
-import registroCompras.RegistroCompraPuntual;
+import sistema.registros.RegistroCompraPuntual;
 
 public class EstacionamientoPuntual extends Estacionamiento {
 

@@ -1,10 +1,10 @@
-package infraccion;
+package sistema.zona.infracciones;
 
 
-import zona.Inspector;
-import zona.ZonaDeEstacionamiento;
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import sistema.zona.ZonaDeEstacionamiento;
 
 public class Infraccion {
     private String patente;

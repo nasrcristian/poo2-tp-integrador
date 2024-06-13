@@ -3,6 +3,8 @@ package appCliente;
 import appCliente.asistencia.AsistenciaActivada;
 import appCliente.asistencia.AsistenciaAlUsuario;
 import appCliente.asistencia.AsistenciaDesactivada;
+import appCliente.estado.EstadoApp;
+import appCliente.estado.SinEstacionamiento;
 import appCliente.modo.ModoAutomatico;
 import appCliente.modo.ModoDeApp;
 import appCliente.modo.ModoManual;
@@ -42,7 +44,7 @@ public class AppCliente implements MovementSensor{
 	}
 
 	//estado de la aplicacion
-	protected void setEstado(EstadoApp estado){
+	public void setEstado(EstadoApp estado){
 		this.estado = estado;
 	}
 

@@ -7,6 +7,8 @@ import appCliente.*;
 import appCliente.asistencia.AsistenciaActivada;
 import appCliente.asistencia.AsistenciaAlUsuario;
 import appCliente.asistencia.AsistenciaDesactivada;
+import appCliente.estado.ConEstacionamiento;
+import appCliente.estado.SinEstacionamiento;
 import appCliente.modo.ModoAutomatico;
 import appCliente.modo.ModoManual;
 import org.junit.jupiter.api.BeforeEach;

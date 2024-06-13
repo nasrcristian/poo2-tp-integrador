@@ -1,6 +1,7 @@
-package zona;
+package sistema.zona.infracciones;
 
 import sistema.SistemaCentral;
+import sistema.zona.ZonaDeEstacionamiento;
 
 
 public class Inspector {

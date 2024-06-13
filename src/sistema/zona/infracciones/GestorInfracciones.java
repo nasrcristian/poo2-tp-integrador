@@ -1,4 +1,4 @@
-package sistema;
+package sistema.zona.infracciones;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,8 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import infraccion.Infraccion;
-import zona.Inspector;
+import sistema.SistemaCentral;
 
 public class GestorInfracciones {
     private List<Infraccion> infracciones;

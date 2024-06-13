@@ -1,12 +1,12 @@
-package puntoVenta;
+package sistema.zona;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 import sistema.SistemaCentral;
-import registroCompras.RegistroCompra;
-import registroCompras.RegistroCompraPuntual;
-import registroCompras.RegistroRecarga;
+import sistema.registros.RegistroCompra;
+import sistema.registros.RegistroCompraPuntual;
+import sistema.registros.RegistroRecarga;
 
 public class PuntoVenta {
 

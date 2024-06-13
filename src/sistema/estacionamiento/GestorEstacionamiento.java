@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import registroCompras.RegistroCompraPuntual;
-import sistema.Cuenta;
 import sistema.SistemaCentral;
+import sistema.cuentas.Cuenta;
+import sistema.registros.RegistroCompraPuntual;
 
 public class GestorEstacionamiento {
     

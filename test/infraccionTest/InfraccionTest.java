@@ -1,10 +1,11 @@
 package infraccionTest;
 
-import infraccion.Infraccion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import zona.Inspector;
-import zona.ZonaDeEstacionamiento;
+
+import sistema.zona.ZonaDeEstacionamiento;
+import sistema.zona.infracciones.Infraccion;
+import sistema.zona.infracciones.Inspector;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

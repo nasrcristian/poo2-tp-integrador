@@ -1,4 +1,4 @@
-package sistema;
+package sistema.cuentas;
 
 import appCliente.AppCliente;
 

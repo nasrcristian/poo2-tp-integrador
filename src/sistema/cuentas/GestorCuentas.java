@@ -1,9 +1,9 @@
-package sistema;
+package sistema.cuentas;
 
 import java.util.*;
 
 import appCliente.AppCliente;
-import registroCompras.RegistroRecarga;
+import sistema.registros.RegistroRecarga;
 
 public class GestorCuentas {
     private Map<Integer, Cuenta> cuentas;	
@@ -14,11 +14,11 @@ public class GestorCuentas {
         this.cuentas = new HashMap<Integer, Cuenta>();
     }
 
-    protected void crearCuenta(AppCliente app){
+    public void crearCuenta(AppCliente app){
         cuentas.put(app.getNumero(), new Cuenta(app));
     }
 
-    protected String getPatenteSiPuede(int nroCelular) throws Exception {
+    public String getPatenteSiPuede(int nroCelular) throws Exception {
         Optional <Cuenta> cuentaBuscada = this.getCuenta(nroCelular);
         if (cuentaBuscada.isPresent()) {
         	return cuentaBuscada.get().getPatente();
@@ -27,17 +27,17 @@ public class GestorCuentas {
         }
     }
 
-    protected Optional<Cuenta> getCuenta(int nroCelular) {
+    public Optional<Cuenta> getCuenta(int nroCelular) {
     	return Optional.of(this.cuentas.get(nroCelular));
     }
 
-    protected float getSaldo(int nroCelular){
+    public float getSaldo(int nroCelular){
         Optional<Cuenta> cuentaBuscada = this.getCuenta(nroCelular);
         return cuentaBuscada.isPresent() ? cuentaBuscada.get().getSaldo() : 0;
     }
 
 
-    protected void descontarCredito(int nroCelular, float monto) throws Exception {
+    public void descontarCredito(int nroCelular, float monto) throws Exception {
         Optional<Cuenta> cuentaBuscada = this.getCuenta(nroCelular);
         if (cuentaBuscada.isPresent()){
             cuentaBuscada.get().descontarCredito(monto);

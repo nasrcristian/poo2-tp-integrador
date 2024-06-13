@@ -9,15 +9,19 @@ import appCliente.AppCliente;
 
 import java.util.ArrayList;
 
-import registroCompras.RegistroCompraPuntual;
-import registroCompras.RegistroRecarga;
-import sistema.entidadObservadora.IEntidad;
+import sistema.cuentas.Cuenta;
+import sistema.cuentas.GestorCuentas;
 import sistema.estacionamiento.Estacionamiento;
 import sistema.estacionamiento.EstacionamientoPorApp;
 import sistema.estacionamiento.GestorEstacionamiento;
-import sistema.sistemaObservable.ISistemaObservable;
-import zona.Inspector;
-import zona.ZonaDeEstacionamiento;
+import sistema.registros.GestorRegistros;
+import sistema.registros.RegistroCompraPuntual;
+import sistema.registros.RegistroRecarga;
+import sistema.sistemaDeMonitoreo.IEntidad;
+import sistema.sistemaDeMonitoreo.ISistemaObservable;
+import sistema.zona.ZonaDeEstacionamiento;
+import sistema.zona.infracciones.GestorInfracciones;
+import sistema.zona.infracciones.Inspector;
 
 public class SistemaCentral implements ISistemaObservable {
 	

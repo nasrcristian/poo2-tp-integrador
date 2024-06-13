@@ -8,10 +8,10 @@ import static org.mockito.Mockito.verify;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import puntoVenta.PuntoVenta;
 import sistema.SistemaCentral;
-import zona.Inspector;
-import zona.ZonaDeEstacionamiento;
+import sistema.zona.PuntoVenta;
+import sistema.zona.ZonaDeEstacionamiento;
+import sistema.zona.infracciones.Inspector;
 
 public class ZonaDeEstacionamientoTest {
 

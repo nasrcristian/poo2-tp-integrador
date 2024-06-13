@@ -8,8 +8,8 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import registroCompras.RegistroCompraPuntual;
 import sistema.estacionamiento.EstacionamientoPuntual;
+import sistema.registros.RegistroCompraPuntual;
 
 public class EstacionamientoPuntualTest {
 

@@ -1,7 +1,7 @@
-package sistema.entidadObservadora;
+package sistema.sistemaDeMonitoreo;
 
-import registroCompras.RegistroRecarga;
 import sistema.estacionamiento.Estacionamiento;
+import sistema.registros.RegistroRecarga;
 
 public interface IEntidad {
 

@@ -2,7 +2,9 @@ package sistema;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import registroCompras.RegistroCompra;
+
+import sistema.registros.GestorRegistros;
+import sistema.registros.RegistroCompra;
 
 import java.util.List;
 

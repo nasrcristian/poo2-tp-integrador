@@ -1,9 +1,12 @@
 package sistema;
 
 import appCliente.AppCliente;
+import sistema.cuentas.Cuenta;
+import sistema.cuentas.GestorCuentas;
+import sistema.registros.RegistroRecarga;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import registroCompras.RegistroRecarga;
 
 import java.util.Map;
 
