@@ -5,7 +5,7 @@ import puntoVenta.PuntoVenta;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class RegistroCompra {
+public abstract class RegistroCompra {
     private Integer numeroControl;
     private PuntoVenta puntoVenta;
     private LocalDate fecha;

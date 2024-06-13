@@ -68,7 +68,7 @@ public class AppClienteTest {
     @Test
     public void testFinalizarEstacionamientoSinEstacionamiento() {
         appCliente.finalizarEstacionamiento();
-        verify(sistemaMock, times(0)).finalizarEstacionamientoSiPuedePara(anyInt());
+        verify(sistemaMock, times(0)).finalizarEstacionamientoSiPuedePara(appCliente.getNumero());
     }
 
     @Test
@@ -126,10 +126,25 @@ public class AppClienteTest {
     
     @Test
     public void testDrivingConAsistenciaYModoAutomatico() {
+    	appCliente.activarAsistencia();
     	appCliente.activarModoAutomatico();
+    	when(sistemaMock.tieneEstacionamientoVigente(appCliente.getNumero())).thenReturn(true);
+    	
     	appCliente.driving();
-    	when(sistemaMock.tieneEstacionamientoVigente(appCliente.getNumero())).thenReturn(false);
-    	verify(sistemaMock, times(1)).iniciarEstacionamientoSiPuedePara(appCliente.getNumero());   	
+    	
+    	verify(notificadorMock, times(1)).manejarNotificacion("Se han detectado cambios, por lo que su estacionamiento ha sido finalizado automaticamente.");   	
     }
+    
+    @Test
+    public void testWalkingConAsistenciaYModoAutomatico() {
+    	appCliente.activarAsistencia();
+    	appCliente.activarModoAutomatico();
+    	when(sistemaMock.tieneEstacionamientoVigente(appCliente.getNumero())).thenReturn(false);
+    	
+    	appCliente.walking();
+    	
+    	verify(notificadorMock, times(1)).manejarNotificacion("Se han detectado cambios, por lo que su estacionamiento ha sido inciado automaticamente.");   	
+    }
+    
     
 }
