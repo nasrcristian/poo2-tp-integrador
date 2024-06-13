@@ -1,11 +1,7 @@
 package estacionamientoTest;
 
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
-
-import registroCompras.RegistroCompra;
 import registroCompras.RegistroCompraPuntual;
 import sistema.Cuenta;
 import sistema.SistemaCentral;
@@ -15,7 +11,6 @@ import sistema.estacionamiento.EstacionamientoPuntual;
 import sistema.estacionamiento.GestorEstacionamiento;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

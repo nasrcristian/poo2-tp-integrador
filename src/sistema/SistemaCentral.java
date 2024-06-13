@@ -46,12 +46,11 @@ public class SistemaCentral implements ISistemaObservable {
 		return this.cuentas.getSaldo(nroCelular);
 	}
 	
-	//mensajes infracción
 	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga){
 		try {
 			this.cuentas.cargarCreditoSiPuede(ordenDeRecarga);
 			this.registros.agregarRegistro(ordenDeRecarga);			 // Esto solo se ejecuta si no hay una excepción.
-			this.notificarRecargaDeCreditoDe(ordenDeRecarga);// Esto solo se ejecuta si no hay una excepción.
+			this.notificarRecargaDeCreditoDe(ordenDeRecarga);		// Esto solo se ejecuta si no hay una excepción.
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 
@@ -156,5 +155,9 @@ public class SistemaCentral implements ISistemaObservable {
 	@Override
 	public void notificarRecargaDeCreditoDe(RegistroRecarga recarga) {
 		this.entidades.stream().forEach(e -> e.actualizarConRecargaDeCredito(recarga));
+	}
+
+	public List<IEntidad> getEntidades() {
+		return this.entidades;
 	}
 }
