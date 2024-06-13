@@ -28,4 +28,12 @@ public class ZonaDeEstacionamiento{
 	public void registrar(PuntoVenta puntoVenta){
         puntoVentas.add(puntoVenta);
     }
+	
+	public Inspector getInspector() {
+		return this.inspector;
+	}
+	
+	public List<PuntoVenta> getPuntosDeVenta(){
+		return puntoVentas;
+	}
 }
