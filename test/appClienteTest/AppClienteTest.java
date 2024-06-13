@@ -88,6 +88,8 @@ public class AppClienteTest {
     @Test
     public void testActivarModoManual() {
         appCliente.activarModoManual();
+        appCliente.getModo().asistenciaInicioEstacionamientoPara(appCliente);
+        appCliente.getModo().asistenciaFinDeEstacionamientoPara(appCliente);
         assertTrue(appCliente.getModo() instanceof ModoManual);
     }
 
@@ -100,7 +102,10 @@ public class AppClienteTest {
     @Test
     public void testDesactivarAsistencia() {
         appCliente.desactivarAsistencia();
+        appCliente.driving();
+        appCliente.walking();
         assertTrue(appCliente.getAsistencia() instanceof AsistenciaDesactivada);
+
     }
 
     @Test
@@ -144,6 +149,4 @@ public class AppClienteTest {
     	
     	verify(notificadorMock, times(1)).manejarNotificacion("Se han detectado cambios, por lo que su estacionamiento ha sido inciado automaticamente.");   	
     }
-    
-    
 }

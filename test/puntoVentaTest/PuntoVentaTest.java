@@ -24,7 +24,8 @@ class PuntoVentaTest {
     void testCargarCredito() {
         int numeroCelular = 123456789;
         float monto = 104.5f;
-        assertDoesNotThrow(() -> puntoVenta.cargarCredito(numeroCelular,monto));
+        puntoVenta.cargarCredito(numeroCelular, monto);
+        assertEquals(monto, sistemaMock.consultarSaldoDe(numeroCelular)); //TODO: Revisar si lo hice mal o no funciona por algun motivo
     }
 
     @Test
@@ -38,7 +39,7 @@ class PuntoVentaTest {
         String patente = "AAA000";
         int cantHoras = 4;
         puntoVenta.compraPuntual(patente, cantHoras);
-        assertEquals(2, puntoVenta.getNroControl());
+        assertTrue(sistemaMock.tieneEstacionamientoVigente(patente)); //TODO: Revisar si lo hice mal o no funciona por algun motivo
     }
 
     @Test

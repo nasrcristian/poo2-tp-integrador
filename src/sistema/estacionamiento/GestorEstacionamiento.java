@@ -15,16 +15,24 @@ public class GestorEstacionamiento {
     LocalTime horarioApertura;
     LocalTime horarioCierre;
     List<EstacionamientoPuntual> estacionamientosPuntualesDelDia;
-    List<EstacionamientoPorApp>  estacionamientosPorAppDelDia;
+	List<EstacionamientoPorApp>  estacionamientosPorAppDelDia;
     List<Estacionamiento>		 estacionamientosHistoricos;
-    
-    public GestorEstacionamiento(float costoPorHora, LocalTime horarioApertura, LocalTime hoarioFin) {
+
+	public GestorEstacionamiento(float costoPorHora, LocalTime horarioApertura, LocalTime hoarioFin) {
 		this.costoPorHora = costoPorHora;
 		this.horarioApertura = horarioApertura;
 		this.horarioCierre = hoarioFin;
 		this.estacionamientosPuntualesDelDia = new ArrayList<EstacionamientoPuntual>();
 		this.estacionamientosPorAppDelDia    = new ArrayList<EstacionamientoPorApp>();
 		this.estacionamientosHistoricos 	  = new ArrayList<Estacionamiento>();
+	}
+
+	public List<EstacionamientoPuntual> getEstacionamientosPuntualesDelDia() {
+		return estacionamientosPuntualesDelDia;
+	}
+
+	public List<EstacionamientoPorApp> getEstacionamientosPorAppDelDia() {
+		return estacionamientosPorAppDelDia;
 	}
 
     private List<Estacionamiento> getEstacionamientosActuales(){
