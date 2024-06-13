@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import registroCompras.RegistroCompraPuntual;
 import sistema.Cuenta;
+import sistema.SistemaCentral;
 
 public class GestorEstacionamiento {
     
@@ -34,15 +35,28 @@ public class GestorEstacionamiento {
     }
     
     public boolean estaVigente(String patente) {
-		return this.getEstacionamientosActuales().stream().anyMatch(e -> e.getPatente() == patente && e.estaVigente());
+		return this.getEstacionamientosActuales().stream().anyMatch(e -> e.getPatente().equals(patente) && e.estaVigente());
 	}
 
+	//gestion estacionamientos Puntuales
 	public EstacionamientoPuntual iniciarEstacionamientoPuntualConOrden(RegistroCompraPuntual ordenDeEstacionamientoPuntual) {
 		EstacionamientoPuntual ticketDeEstacionamiento = new EstacionamientoPuntual(ordenDeEstacionamientoPuntual.getPatente(), this.calcularHorarioInicio(), this.calcularHorarioFin(ordenDeEstacionamientoPuntual.getCantHoras()), this.costoPorHora, ordenDeEstacionamientoPuntual);
-		estacionamientosPuntualesDelDia.add(ticketDeEstacionamiento);
+		this.estacionamientosPuntualesDelDia.add(ticketDeEstacionamiento);
 		return ticketDeEstacionamiento;
 	}
-	
+
+	public LocalTime calcularHorarioInicio() {
+		LocalTime horaActual = LocalTime.now();
+		return horaActual.isBefore(horarioApertura) || horaActual.isAfter(horarioCierre) ? this.horarioApertura : horaActual;
+		// Este es un caso borde en el cual al comprar un estacionamientoPuntual en un horario en el cual ya no se trabaja el mismo se pasaria para el dia siguiente.
+	}
+
+	public LocalTime calcularHorarioFin(int cantHoras) {
+		LocalTime horaCalculada = LocalTime.now().plusHours(cantHoras);
+		return horaCalculada.isAfter(horarioCierre) ? this.horarioCierre : horaCalculada;
+	}
+
+	//gestion estacionamientos APP
 	public EstacionamientoPorApp iniciarEstacionamientoPara(Cuenta cuenta) throws Exception {
 		int cantidadDeHorasPermitidas = this.calcularCantidadDeHorasParaSaldo(cuenta.getSaldo());
 		if (cantidadDeHorasPermitidas > 0) {
@@ -58,19 +72,9 @@ public class GestorEstacionamiento {
 		return (int) (saldo / this.costoPorHora);
 	}
 
-	public LocalTime calcularHorarioInicio() {
-		LocalTime horaActual = LocalTime.now();
-		return horaActual.isBefore(horarioApertura) || horaActual.isAfter(horarioCierre) ? this.horarioApertura : horaActual;
-		// Este es un caso borde en el cual al comprar un estacionamientoPuntual en un horario en el cual ya no se trabaja el mismo se pasaria para el dia siguiente.
-	}
-	
-	public LocalTime calcularHorarioFin(int cantHoras) {
-		LocalTime horaCalculada = LocalTime.now().plusHours(cantHoras);
-		return horaCalculada.isAfter(horarioCierre) ? this.horarioCierre : horaCalculada;
-	}
 
 	public EstacionamientoPorApp finalizarEstacionamientoPara(String patente) throws Exception{
-		Optional <EstacionamientoPorApp> estacionamientoBuscado = this.estacionamientosPorAppDelDia.stream().filter(e -> e.getPatente() == patente).findFirst();
+		Optional <EstacionamientoPorApp> estacionamientoBuscado = this.estacionamientosPorAppDelDia.stream().filter(e -> e.getPatente().equals(patente)).findFirst();
 		if (estacionamientoBuscado.isPresent()) {
 			EstacionamientoPorApp estActual = estacionamientoBuscado.get();
 			estActual.finalizar();
@@ -81,5 +85,12 @@ public class GestorEstacionamiento {
 			throw new Exception("Usted no tiene ningún estacionamiento activo.");
 		}
 		
+	}
+
+	//tal vez meter en el mismo package al gestor para evitar dejarlo public y tener mejor encapsulamiento
+	public void finalizarEstacionamientosVigentes(SistemaCentral sistema){
+		this.estacionamientosHistoricos.addAll(this.estacionamientosPuntualesDelDia);
+		this.estacionamientosPuntualesDelDia.clear();
+		this.estacionamientosPorAppDelDia.forEach(e -> sistema.finalizarEstacionamientoSiPuedePara(e.getNumeroDeCelular())); //elimina, notifica y agrega los estacionamientos al historico
 	}
 }

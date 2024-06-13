@@ -46,7 +46,7 @@ public class SistemaCentral implements ISistemaObservable {
 		return this.cuentas.getSaldo(nroCelular);
 	}
 	
-	//metodos infraccion
+	//mensajes infracción
 	public void cargarCreditoDeLaOrdenSiPuede(RegistroRecarga ordenDeRecarga){
 		try {
 			this.cuentas.cargarCreditoSiPuede(ordenDeRecarga);
@@ -58,7 +58,7 @@ public class SistemaCentral implements ISistemaObservable {
 	}
 	
 	
-	//mensajes infraccion
+	//mensajes infracción
 	public void generarInfraccion(String patente, Inspector inspector) {
 		this.infracciones.generarInfraccion(patente, inspector);
 	}
@@ -72,9 +72,9 @@ public class SistemaCentral implements ISistemaObservable {
 	}
 	
 	
-	public boolean tieneEstacionamientoVigente(int nroCelular) { // Permite que la verificacion sea sin necesidad de ingresar patente.
+	public boolean tieneEstacionamientoVigente(int nroCelular) { // Permite que la verificación sea sin necesidad de ingresar patente.
 		try {
-			return this.tieneEstacionamientoVigente(this.cuentas.getPatenteSiPuede(nroCelular)); // getPatente puede tirar una excepción ya que la cuenta puede no estar asociada.
+			return this.tieneEstacionamientoVigente(this.cuentas.getPatenteSiPuede(nroCelular)); // getPatente puede tirar una excepción, ya que la cuenta puede no estar asociada.
 		} catch (Exception e) {
 			return false;
 		}
@@ -88,7 +88,7 @@ public class SistemaCentral implements ISistemaObservable {
 		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroDeTelefono);
 		if (cuentaBuscada.isPresent()) {
 			Cuenta cuenta = cuentaBuscada.get();
-			iniciarEstacionamientoPara(cuenta);
+			this.iniciarEstacionamientoPara(cuenta);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class SistemaCentral implements ISistemaObservable {
 		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroCelular);
 		if (cuentaBuscada.isPresent()) {
 			Cuenta cuenta = cuentaBuscada.get();
-			finalizarEstacionamientoPara(cuenta);
+			this.finalizarEstacionamientoPara(cuenta);
 		}
 	}
 
@@ -122,6 +122,10 @@ public class SistemaCentral implements ISistemaObservable {
 		} catch (Exception e){
 			app.notificar(e.getMessage());
 		}
+	}
+
+	public void finalizarDia(){
+		this.estacionamientos.finalizarEstacionamientosVigentes(this);
 	}
 	
 	/* ################ SISTEMA DE MONITOREO ################ */
