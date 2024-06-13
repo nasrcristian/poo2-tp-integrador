@@ -3,6 +3,8 @@ package estacionamientoTest;
 import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
+
 import registroCompras.RegistroCompra;
 import registroCompras.RegistroCompraPuntual;
 import sistema.Cuenta;
@@ -66,47 +68,46 @@ class GestorEstacionamientoTest {
     }
 
     @Test
-    void testIniciarEstacionamientoPara() {
+    void testIniciarEstacionamientoPara() throws Exception {
         Cuenta cuentaMock = mock(Cuenta.class);
         String patente = "AAA000";
         int numeroCelular = 123456789;
-        when(cuentaMock.getSaldo()).thenReturn(10f);
+        when(cuentaMock.getSaldo()).thenReturn(80f);
         when(cuentaMock.getPatente()).thenReturn(patente);
         when(cuentaMock.getNroCelular()).thenReturn(numeroCelular);
-        try{
-            gestor.iniciarEstacionamientoPara(cuentaMock);
-            assertTrue(gestor.estaVigente(cuentaMock.getPatente()));
-        }catch (Exception e){
-            fail("Test fallo: " + e.getMessage());
-        }
+        gestor.iniciarEstacionamientoPara(cuentaMock);
+        assertFalse(gestor.getEstacionamientosPorAppDelDia().isEmpty());
     }
 
     @Test
-    void testFinalizarEstacionamientoPara() {
-        Cuenta cuentaMock = mock(Cuenta.class);
+    void testFinalizarEstacionamientoPara() throws Exception{
+    	Cuenta cuentaMock = mock(Cuenta.class);
         String patente = "AAA000";
         int numeroCelular = 123456789;
-        when(cuentaMock.getSaldo()).thenReturn(10f);
+        when(cuentaMock.getSaldo()).thenReturn(80f);
         when(cuentaMock.getPatente()).thenReturn(patente);
         when(cuentaMock.getNroCelular()).thenReturn(numeroCelular);
-        try{
-            gestor.iniciarEstacionamientoPara(cuentaMock);
-            assertTrue(gestor.estaVigente(cuentaMock.getPatente()));
-            gestor.finalizarEstacionamientoPara(cuentaMock.getPatente());
-            assertFalse(gestor.estaVigente(cuentaMock.getPatente()));
-        }catch (Exception e){
-            fail("Test fallo: " + e.getMessage());
+        gestor.iniciarEstacionamientoPara(cuentaMock);
+        gestor.finalizarEstacionamientoPara(cuentaMock.getPatente());
+        assertTrue(gestor.getEstacionamientosPorAppDelDia().isEmpty());
         }
-    }
-
+    
     @Test
-    void testFinalizarEstacionamientosVigentes() {
+    void testFinalizarEstacionamientosVigentes() throws Exception{
         SistemaCentral sistemaMock = mock(SistemaCentral.class);
         RegistroCompraPuntual ordenCompraMock = mock(RegistroCompraPuntual.class);
         gestor.iniciarEstacionamientoPuntualConOrden(ordenCompraMock);
-        assertTrue(gestor.getEstacionamientosPuntualesDelDia().size() == 1);
+        Cuenta cuentaMock = mock(Cuenta.class);
+        String patente = "AAA000";
+        int numeroCelular = 123456789;
+        when(cuentaMock.getSaldo()).thenReturn(80f);
+        when(cuentaMock.getPatente()).thenReturn(patente);
+        when(cuentaMock.getNroCelular()).thenReturn(numeroCelular);
+        gestor.iniciarEstacionamientoPara(cuentaMock);
+        assertFalse(gestor.getEstacionamientosPuntualesDelDia().isEmpty());
+        assertFalse(gestor.getEstacionamientosPorAppDelDia().isEmpty());
         gestor.finalizarEstacionamientosVigentes(sistemaMock);
-        assertTrue(gestor.getEstacionamientosPorAppDelDia().isEmpty());
+        verify(sistemaMock, times(1)).finalizarEstacionamientoSiPuedePara(numeroCelular);
         assertTrue(gestor.getEstacionamientosPuntualesDelDia().isEmpty());
     }
 }

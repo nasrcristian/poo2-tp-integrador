@@ -27,12 +27,9 @@ class PuntoVentaTest {
     void testCargarCredito() {
         int numeroCelular = 123456789;
         float monto = 104.5f;
-        AppCliente appClienteMock = mock(AppCliente.class);
-        when(appClienteMock.getNumero()).thenReturn(numeroCelular);
-        GestorCuentas cuentasMock = mock(GestorCuentas.class);
-        sistemaMock.crearCuenta(appClienteMock);
         puntoVenta.cargarCredito(numeroCelular, monto);
-        assertEquals(monto, sistemaMock.consultarSaldoDe(numeroCelular)); //TODO: Revisar si lo hice mal o no funciona por algun motivo
+        verify(sistemaMock, times(1)).cargarCreditoDeLaOrdenSiPuede(any()); // Solo interesa saber que recibió el mensaje.
+       
     }
 
     @Test
@@ -46,7 +43,7 @@ class PuntoVentaTest {
         String patente = "AAA000";
         int cantHoras = 4;
         puntoVenta.compraPuntual(patente, cantHoras);
-        assertTrue(sistemaMock.tieneEstacionamientoVigente(patente)); //TODO: Revisar si lo hice mal o no funciona por algun motivo
+       verify(sistemaMock, times(1)).iniciarEstacionamientoPuntual(any()); // Solo interesa saber que recibió el mensaje.
     }
 
     @Test
