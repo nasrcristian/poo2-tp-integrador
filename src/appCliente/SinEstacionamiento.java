@@ -2,10 +2,6 @@ package appCliente;
 
 public class SinEstacionamiento extends EstadoApp {
 
-    public SinEstacionamiento(){
-
-    }
-
     @Override
     protected void finalizarEstacionamiento(AppCliente appCliente) {
         //// no hace nada porque aun no tiene un estacionamiento vigente
@@ -13,12 +9,8 @@ public class SinEstacionamiento extends EstadoApp {
 
     @Override
     protected void iniciarEstacionamiento(AppCliente appCliente) {
-        appCliente.getSistema().iniciarEstacionamientoSiPuedePara(appCliente.getNumero());
-        appCliente.setEstado(new ConEstacionamiento());
-    }
-
-    @Override
-    protected boolean tieneEstacionamiento() {
-    	return false;
+      if (appCliente.getSistema().iniciarEstacionamientoSiPuedePara(appCliente.getNumero())) {
+        	appCliente.setEstado(new ConEstacionamiento());
+        } // En caso de que no tenga saldo no se va a iniciar el estacionamiento.
     }
 }

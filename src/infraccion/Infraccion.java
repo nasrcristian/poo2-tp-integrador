@@ -1,7 +1,7 @@
 package infraccion;
 
 
-import inspector.Inspector;
+import zona.Inspector;
 import zona.ZonaDeEstacionamiento;
 import java.time.LocalDate;
 import java.time.LocalTime;

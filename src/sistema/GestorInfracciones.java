@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import infraccion.Infraccion;
-import inspector.Inspector;
+import zona.Inspector;
 
 public class GestorInfracciones {
     private List<Infraccion> infracciones;

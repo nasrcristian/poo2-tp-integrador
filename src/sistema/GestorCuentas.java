@@ -27,7 +27,7 @@ public class GestorCuentas {
         }
     }
 
-    protected Optional<Cuenta> getCuenta(Integer nroCelular) {
+    protected Optional<Cuenta> getCuenta(int nroCelular) {
     	return Optional.of(this.cuentas.get(nroCelular));
     }
 

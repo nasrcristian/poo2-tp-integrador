@@ -2,10 +2,6 @@ package appCliente;
 
 public class ConEstacionamiento extends EstadoApp {
 
-    public ConEstacionamiento(){
-
-    }
-
     @Override
     protected void iniciarEstacionamiento(AppCliente appCliente) {
         // no hace nada porque ya tiene un estacionamiento vigente
@@ -17,10 +13,5 @@ public class ConEstacionamiento extends EstadoApp {
         int numeroCliente = appCliente.getNumero();
         appCliente.getSistema().finalizarEstacionamientoSiPuedePara(numeroCliente);
         appCliente.setEstado(new SinEstacionamiento());
-    }
-
-    @Override
-    protected boolean tieneEstacionamiento() {
-        return true;
     }
 }

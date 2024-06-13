@@ -9,7 +9,6 @@ import appCliente.AppCliente;
 
 import java.util.ArrayList;
 
-import inspector.Inspector;
 import registroCompras.RegistroCompraPuntual;
 import registroCompras.RegistroRecarga;
 import sistema.entidadObservadora.IEntidad;
@@ -17,7 +16,8 @@ import sistema.estacionamiento.Estacionamiento;
 import sistema.estacionamiento.EstacionamientoPorApp;
 import sistema.estacionamiento.GestorEstacionamiento;
 import sistema.sistemaObservable.ISistemaObservable;
-import zona.ZonaDeEstacionamientoMedido;
+import zona.Inspector;
+import zona.ZonaDeEstacionamiento;
 
 public class SistemaCentral implements ISistemaObservable {
 	
@@ -25,10 +25,10 @@ public class SistemaCentral implements ISistemaObservable {
 	private GestorInfracciones infracciones;
 	private GestorRegistros registros;
 	private GestorCuentas cuentas;
-	private Set<ZonaDeEstacionamientoMedido> zonas;
+	private Set<ZonaDeEstacionamiento> zonas;
 	private List <IEntidad> entidades;
 	
-	public SistemaCentral(GestorEstacionamiento gestorEst, GestorInfracciones gestorInf, GestorRegistros registros, GestorCuentas cuentas, Set<ZonaDeEstacionamientoMedido> zonas) {
+	public SistemaCentral(GestorEstacionamiento gestorEst, GestorInfracciones gestorInf, GestorRegistros registros, GestorCuentas cuentas, Set<ZonaDeEstacionamiento> zonas) {
 		this.estacionamientos = gestorEst;
 		this.infracciones = gestorInf;
 		this.registros = registros;
@@ -84,22 +84,26 @@ public class SistemaCentral implements ISistemaObservable {
 		return this.estacionamientos.estaVigente(patente);
 	}
 	
-	public void iniciarEstacionamientoSiPuedePara(int numeroDeTelefono) {
+
+	public boolean iniciarEstacionamientoSiPuedePara(int numeroDeTelefono) {
 		Optional<Cuenta> cuentaBuscada = this.cuentas.getCuenta(numeroDeTelefono);
 		if (cuentaBuscada.isPresent()) {
 			Cuenta cuenta = cuentaBuscada.get();
-			this.iniciarEstacionamientoPara(cuenta);
+			return iniciarEstacionamientoPara(cuenta);
 		}
+		return false;
 	}
 
-	private void iniciarEstacionamientoPara(Cuenta cuenta) {
+	private boolean iniciarEstacionamientoPara(Cuenta cuenta) {
 		AppCliente app = cuenta.getApp();
 		try {
 			EstacionamientoPorApp ticketDeEstacionamiento = this.estacionamientos.iniciarEstacionamientoPara(cuenta);
 			this.notificarInicioDeEstacionamientoDe(ticketDeEstacionamiento);
 			app.notificar("Se ha iniciado correctamente un estacionamiento a las " + ticketDeEstacionamiento.getHoraInicio() + ". El horario máximo de finalización del mismo es a las " + ticketDeEstacionamiento.getHoraFin() + ".");
+			return true;
 		} catch (Exception e) {
 			app.notificar(e.getMessage());
+			return false;
 		}
 	}
 

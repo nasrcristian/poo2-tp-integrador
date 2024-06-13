@@ -26,6 +26,7 @@ public class AppCliente implements MovementSensor{
 		this.setModo(new ModoManual()); // Por defecto la app se encuentra en modo manual.
 		this.setAsistencia(new AsistenciaActivada());
 		this.notificador = notificador; // Es un objeto externo que se encargaría de manejar las notificaciones que reciba la app.
+		this.crearCuenta();
 	}
 	
 	public int getNumero() {
@@ -82,6 +83,7 @@ public class AppCliente implements MovementSensor{
 	
 	public void desactivarAsistencia() {
 		this.setAsistencia(new AsistenciaDesactivada()); 
+		this.setModo(new ModoManual());
 		// En caso de que la asistencia este desactivada, el modo automático no va a hacer nada y el modo manual no va a notificar. 
 		// Pero cuando este sea activado va a volver actuar sin necesidad de activar nuevamente el mismo.
 	}
@@ -116,12 +118,26 @@ public class AppCliente implements MovementSensor{
 		return this.sistema.consultarSaldoDe(this.nroCelular);
 	}
 	
-	public void crearCuenta() {
+	private void crearCuenta() {
 		this.sistema.crearCuenta(this);
 	}
 
 	public void notificar(String mensaje) {
 		this.notificador.manejarNotificacion(mensaje);;
+	}
+
+	
+// GETTERS
+	public EstadoApp getEstado() {
+		return this.estado;
+	}
+
+	public ModoDeApp getModo() {
+		return this.modo;
+	}
+
+	public AsistenciaAlUsuario getAsistencia() {
+		return this.asistencia;
 	}
 
 	

@@ -1,19 +1,15 @@
-package inspector;
+package zona;
 
 import sistema.SistemaCentral;
-import zona.SinZonaDeEstacionamiento;
-import zona.ZonaDeEstacionamiento;
 
 
 public class Inspector {
     private SistemaCentral sistema;
     private ZonaDeEstacionamiento zonaACargo;
 
-    public Inspector(SistemaCentral sistema){
+    public Inspector(SistemaCentral sistema, ZonaDeEstacionamiento zona){
         this.sistema = sistema;
-        this.zonaACargo = new SinZonaDeEstacionamiento(); 
-        // Ya que hay una dependencia circular entre la zona de estacionamiento y el inspector, se tomó la decisión de modelar una clase que funcione como una zona de estacionamiento "nula"
-        // Por lo tanto el inspector se inicializaria sin una zona de estacionamiento asignada y luego se le daria la misma al momento de crearse la zona de estacionamiento.
+        this.zonaACargo = zona;
     }
 
     public ZonaDeEstacionamiento getZona(){
